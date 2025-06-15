@@ -18,7 +18,7 @@ A robust, full-featured web application designed to simplify the management of s
 - Add new suppliers
 - Edit or delete existing suppliers
 - Select suppliers while adding paychecks  
-
+![Dashboard Overview](client/src/assets/Add S.png)  
 
 ### 🏦 Bank Management
 - Add/edit/delete banks
