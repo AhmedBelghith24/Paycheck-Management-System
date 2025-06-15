@@ -18,17 +18,17 @@ A robust, full-featured web application designed to simplify the management of s
 - Add new suppliers
 - Edit or delete existing suppliers
 - Select suppliers while adding paychecks  
-![Supplier Screenshot](./screenshots/supplier-management.png)
+
 
 ### 🏦 Bank Management
 - Add/edit/delete banks
 - Associate banks with paycheck records  
-![Bank Screenshot](./screenshots/bank-management.png)
+
 
 ### 💵 Add & Manage Paychecks
 - Create paychecks with supplier, bank, amounts, and dates
 - Client-side validation and required field alerts  
-![Add Paycheck Screenshot](./screenshots/add-paycheck.png)
+
 
 ### 🔍 Filter & Search
 - Filter paychecks by:
@@ -36,21 +36,21 @@ A robust, full-featured web application designed to simplify the management of s
   - Bank
   - Date range (Receiving or Payment)
   - Paid/unpaid status  
-![Filter Screenshot](./screenshots/filter-paychecks.png)
+
 
 ### ✏️ Update & Delete Records
 - Modify paycheck or delete entries with confirmation prompts  
-![Update Screenshot](./screenshots/update-records.png)
+!
 
 ### ✔️ Mark as Paid
 - Instantly mark paychecks as paid
 - Automatically move to the paid section  
-![Mark Paid Screenshot](./screenshots/mark-as-paid.png)
+
 
 ### 🧮 Compute Totals
 - Select multiple paychecks
 - See total selected amount instantly  
-![Total Screenshot](./screenshots/compute-totals.png)
+
 
 ---
 
