@@ -1,45 +1,94 @@
-# Paycheck-Management-System
+# 💼 Paycheck Management System
 
-A comprehensive and user-friendly web application designed to simplify the management of supplier payments and paycheck records. Built using a modern tech stack—**React**, **Bootstrap**, **Express.js**, and **MongoDB**—this project delivers a seamless experience for tracking, updating, and organizing payments with powerful features and a clean interface.
+A robust, full-featured web application designed to simplify the management of supplier paychecks and bank transactions. Built using the **MERN stack**—**MongoDB**, **Express.js**, **React**, and **Node.js**—this system allows businesses to track, filter, and manage paychecks with a clean and responsive interface.
 
-## Features
+![Dashboard Overview](./screenshots/project-overview.png)  
+*Paycheck Management Dashboard*
 
-- **Add Paychecks Easily**  
-  Quickly add new paycheck records with all necessary details in a structured form.  
-  ![Add Paychecks Screenshot](./screenshots/add-paycheck.png)  
-  *Add paychecks with simple and intuitive forms.*
+---
 
-- **Filter and Search**  
-  Instantly filter paychecks by status, date, or other criteria to find exactly what you need.  
-  ![Filter Paychecks Screenshot](./screenshots/filter-paychecks.png)  
-  *Easily filter and search paycheck records.*
+## 🚀 Features
 
-- **Update Records**  
-  Modify paycheck details effortlessly whenever changes arise.  
-  ![Update Records Screenshot](./screenshots/update-records.png)  
-  *Update paycheck information seamlessly.*
+### ✅ Authentication
+- Secure login system
+- Protected routes using context API
+- Token-based localStorage authentication
 
-- **Mark as Paid**  
-  Toggle payment status to keep accurate and up-to-date records of completed transactions.  
-  ![Mark as Paid Screenshot](./screenshots/mark-as-paid.png)  
-  *Mark paychecks as paid with one click.*
+### 👥 Supplier Management
+- Add new suppliers
+- Edit or delete existing suppliers
+- Select suppliers while adding paychecks  
+![Supplier Screenshot](./screenshots/supplier-management.png)
 
-- **Compute Totals**  
-  Automatically calculate total paychecks to monitor your financial outflow clearly.  
-  ![Compute Totals Screenshot](./screenshots/compute-totals.png)  
-  *View total payments at a glance.*
+### 🏦 Bank Management
+- Add/edit/delete banks
+- Associate banks with paycheck records  
+![Bank Screenshot](./screenshots/bank-management.png)
 
-- **Intuitive UI/UX**  
-  Built with React and Bootstrap to ensure responsiveness and an easy-to-navigate user interface on all devices.  
-  ![Responsive UI Screenshot](./screenshots/responsive-ui.png)  
-  *Clean and responsive design for all devices.*
+### 💵 Add & Manage Paychecks
+- Create paychecks with supplier, bank, amounts, and dates
+- Client-side validation and required field alerts  
+![Add Paycheck Screenshot](./screenshots/add-paycheck.png)
 
-- **Robust Backend**  
-  Powered by Express.js and MongoDB for secure data storage and efficient server-side logic.
+### 🔍 Filter & Search
+- Filter paychecks by:
+  - Supplier
+  - Bank
+  - Date range (Receiving or Payment)
+  - Paid/unpaid status  
+![Filter Screenshot](./screenshots/filter-paychecks.png)
 
-## Why This Project?
+### ✏️ Update & Delete Records
+- Modify paycheck or delete entries with confirmation prompts  
+![Update Screenshot](./screenshots/update-records.png)
 
-Managing payments and paychecks can be tedious and error-prone. This system brings clarity and control to the process by combining simplicity with powerful features, making it ideal for small businesses, suppliers, or anyone looking to streamline paycheck management.
+### ✔️ Mark as Paid
+- Instantly mark paychecks as paid
+- Automatically move to the paid section  
+![Mark Paid Screenshot](./screenshots/mark-as-paid.png)
+
+### 🧮 Compute Totals
+- Select multiple paychecks
+- See total selected amount instantly  
+![Total Screenshot](./screenshots/compute-totals.png)
+
+---
+
+## 🔐 Authentication
+
+- Token-based login
+- Protected routes with React Router and `PrivateRoute` component
+- Redirects to `/login` when not authenticated
+
+---
+
+## 🛠️ Tech Stack
+
+| Frontend      | Backend         | Database  | UI/UX       |
+| ------------- | --------------- | --------- | ----------- |
+| React         | Node.js, Express| MongoDB   | Bootstrap 5 |
+
+
+## 📂 Project Structure
+
+```
+client/             # React frontend
+  └── components/
+  └── pages/
+  └── context/AuthContext.js
+  └── App.js
+
+server/             # Express backend
+  └── models/
+  └── routes/
+  └── controllers/
+  └── middleware/
+  └── server.js
+```
+
+---
+
+## 🧪 How to Run Locally
 
 ## Getting Started
 
