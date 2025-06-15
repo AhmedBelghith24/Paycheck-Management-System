@@ -90,6 +90,26 @@ server/             # Express backend
 
 ---
 
+# 📦 Project Dependencies
+
+## Backend (Node.js / Express)
+- express
+- mongoose
+- dotenv
+- cors
+- bcryptjs
+- jsonwebtoken
+- nodemon (dev only)
+
+## Frontend (React)
+- react
+- react-dom
+- react-router-dom
+- axios
+- bootstrap
+- react-datepicker
+- @fortawesome/fontawesome-free
+
 ## 🧪 How to Run Locally
 
 ### Getting Started
