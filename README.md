@@ -5,22 +5,34 @@ A comprehensive and user-friendly web application designed to simplify the manag
 ## Features
 
 - **Add Paychecks Easily**  
-  Quickly add new paycheck records with all necessary details in a structured form.
+  Quickly add new paycheck records with all necessary details in a structured form.  
+  ![Add Paychecks Screenshot](./screenshots/add-paycheck.png)  
+  *Add paychecks with simple and intuitive forms.*
 
 - **Filter and Search**  
-  Instantly filter paychecks by status, date, or other criteria to find exactly what you need.
+  Instantly filter paychecks by status, date, or other criteria to find exactly what you need.  
+  ![Filter Paychecks Screenshot](./screenshots/filter-paychecks.png)  
+  *Easily filter and search paycheck records.*
 
 - **Update Records**  
-  Modify paycheck details effortlessly whenever changes arise.
+  Modify paycheck details effortlessly whenever changes arise.  
+  ![Update Records Screenshot](./screenshots/update-records.png)  
+  *Update paycheck information seamlessly.*
 
 - **Mark as Paid**  
-  Toggle payment status to keep accurate and up-to-date records of completed transactions.
+  Toggle payment status to keep accurate and up-to-date records of completed transactions.  
+  ![Mark as Paid Screenshot](./screenshots/mark-as-paid.png)  
+  *Mark paychecks as paid with one click.*
 
 - **Compute Totals**  
-  Automatically calculate total paychecks to monitor your financial outflow clearly.
+  Automatically calculate total paychecks to monitor your financial outflow clearly.  
+  ![Compute Totals Screenshot](./screenshots/compute-totals.png)  
+  *View total payments at a glance.*
 
 - **Intuitive UI/UX**  
-  Built with React and Bootstrap to ensure responsiveness and an easy-to-navigate user interface on all devices.
+  Built with React and Bootstrap to ensure responsiveness and an easy-to-navigate user interface on all devices.  
+  ![Responsive UI Screenshot](./screenshots/responsive-ui.png)  
+  *Clean and responsive design for all devices.*
 
 - **Robust Backend**  
   Powered by Express.js and MongoDB for secure data storage and efficient server-side logic.
