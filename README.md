@@ -2,7 +2,7 @@
 
 A robust, full-featured web application designed to simplify the management of supplier paychecks and bank transactions. Built using the **MERN stack**—**MongoDB**, **Express.js**, **React**, and **Node.js**—this system allows businesses to track, filter, and manage paychecks with a clean and responsive interface.
 
-![Dashboard Overview](./screenshots/project-overview.png)  
+![Dashboard Overview](client/src/assets/Overview.png)  
 *Paycheck Management Dashboard*
 
 ---
