@@ -92,32 +92,26 @@ server/             # Express backend
 
 ## 🧪 How to Run Locally
 
-## Getting Started
+### Getting Started
 
 1. Clone the repository  
     ```bash
     git clone https://github.com/AhmedBelghith24/Paycheck-Management-System.git
     ```
-2. Install backend dependencies  
+2. Install backend and frontend dependencies  
     ```bash
     cd crud-users
     npm install
-    ```
-3. Install frontend dependencies  
-    ```bash
     cd client
     npm install
+    cd ..
     ```
-4. Run backend server  
+3. Start both backend and frontend servers concurrently  
     ```bash
-    npm start
+    npm run dev
     ```
-5. Run frontend development server (in another terminal)  
-    ```bash
-    cd client
-    npm start
-    ```
-6. Open your browser at `http://localhost:3000` and enjoy!
+4. Open your browser at `http://localhost:3000` and enjoy!
+
 
 ## Future Improvements
 
