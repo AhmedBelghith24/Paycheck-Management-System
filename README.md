@@ -13,7 +13,7 @@ A robust, full-featured web application designed to simplify the management of s
 - Secure login system
 - Protected routes using context API
 - Token-based localStorage authentication
-![Login Screenshot](client/src/assets/Login.png)
+![Login Screenshot](client/src/assets/Loginn.png)
 
 ### 👥 Supplier Management
 - Add new suppliers
