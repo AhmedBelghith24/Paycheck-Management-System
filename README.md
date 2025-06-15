@@ -13,16 +13,18 @@ A robust, full-featured web application designed to simplify the management of s
 - Secure login system
 - Protected routes using context API
 - Token-based localStorage authentication
+![Login Screenshot](client/src/assets/Login.png)
 
 ### 👥 Supplier Management
 - Add new suppliers
 - Edit or delete existing suppliers
 - Select suppliers while adding paychecks  
-![Dashboard Overview](client/src/assets/Add S.png)  
+![Supplier Screenshot](client/src/assets/Add%20S.png) 
 
 ### 🏦 Bank Management
 - Add/edit/delete banks
-- Associate banks with paycheck records  
+- Associate banks with paycheck records
+  ![Bank Screenshot](client/src/assets/Add%20B.png)
 
 
 ### 💵 Add & Manage Paychecks
