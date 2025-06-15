@@ -90,7 +90,7 @@ server/             # Express backend
 
 ---
 
-# 📦 Project Dependencies
+## 📦 Project Dependencies
 
 ## Backend (Node.js / Express)
 - express
