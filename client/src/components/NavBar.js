@@ -1,84 +1,57 @@
-import React, { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import logo from '../assets/Shell-Logo.png'
-import AuthContext from '../context/AuthContext'
+// src/components/Navbar.js
+import React, { useContext } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import logo from "../assets/Shell-Logo.png";
+import AuthContext from "../context/AuthContext";
+import "./Navbar.css";
 
-function Navbar() {
-  const { logout } = useContext(AuthContext)
-  const navigate = useNavigate()
+export default function Navbar() {
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
+    logout();
+    navigate("/login");
+  };
+
+  const tabs = [
+    { label: "Accueil", to: "/home" },
+    { label: "Fournisseurs", to: "/supplier" },
+    { label: "Banque", to: "/bank" },
+    { label: "Chèques payés", to: "/payed-check" },
+  ];
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
-      <div className="container-fluid">
-        <Link className="navbar-brand d-flex align-items-center" to="/home">
-          <img
-            src={logo}
-            alt="logo"
-            width="40"
-            height="40"
-            className="d-inline-block align-text-top me-2"
-          />
-          <span className="fw-bold">
-            Societe <span style={{ color: 'red' }}>3C</span>
-          </span>
+    <nav className="navbar-custom">
+      <div className="navbar-container">
+        {/* Logo only */}
+        <Link to="/home" className="navbar-brand">
+          <img src={logo} alt="Logo" />
         </Link>
 
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-
-        <div
-          className="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
-        >
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="/home">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/supplier">
-                Supplier
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/bank">
-                Bank
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/payed-check">
-                Payed Check
-              </Link>
-            </li>
-            <li className="nav-item">
-              <button
-                className="nav-link text-danger btn btn-link"
-                style={{ textDecoration: 'none' }}
-                onClick={handleLogout}
+        {/* Tabs */}
+        <ul className="nav-links">
+          {tabs.map(({ label, to }) => (
+            <li key={to}>
+              <Link
+                to={to}
+                className={
+                  "nav-link-custom" +
+                  (location.pathname === to ? " active" : "")
+                }
               >
-                Logout
-              </button>
+                {label}
+              </Link>
             </li>
-          </ul>
-        </div>
+          ))}
+        </ul>
+
+        {/* Logout pill */}
+        <button onClick={handleLogout} className="logout-tab">
+          Déconnexion
+        </button>
       </div>
     </nav>
-  )
+  );
 }
-
-export default Navbar

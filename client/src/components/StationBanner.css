@@ -1,0 +1,74 @@
+:root {
+  --shell-red: #d60000;
+  --shell-white: #ffffff;
+  --shell-black: #000000;
+  --radius: 8px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --fs-title: 1.5rem;
+  --fs-text: 1rem;
+}
+
+.station-banner {
+  position: relative;
+  max-width: 90vw;
+  margin: var(--spacing-lg) auto;
+  overflow: visible;
+  margin-top: 5rem;
+}
+
+.station-banner__img {
+  display: block;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.station-banner__info {
+  position: absolute;
+  bottom: -25px;
+  left: var(--spacing-md);
+  background: var(--shell-white);
+  border-left: 4px solid var(--shell-red);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--spacing-md);
+  max-width: 350px;
+  color: var(--shell-black);
+  z-index: 10;
+}
+
+.station-banner__info h3 {
+  font-size: var(--fs-title);
+  margin-bottom: var(--spacing-md);
+}
+
+.station-banner__map-container {
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.station-banner__map-container iframe {
+  width: 100%;
+  height: 200px; /* you can bump this up if needed */
+  border: none;
+}
+
+.station-banner__phone,
+.station-banner__hours {
+  font-size: var(--fs-text);
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .station-banner__info {
+    bottom: -15px;
+    left: var(--spacing-md);
+    max-width: 85vw;
+  }
+}

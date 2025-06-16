@@ -1,44 +1,39 @@
-import React from 'react'
-import bgImage from '../assets/banneer.jpeg' // Ensure this path and image are correct
+import React from "react";
+import bgImage from "../assets/banneer.jpeg";
+import "./StationBanner.css";
 
-function StationBanner() {
+export default function StationBanner() {
+  const stationCoords = "36.7305652,10.251152";
+  const embedUrl =
+    `https://maps.google.com/maps` +
+    `?q=${stationCoords}` +
+    `&z=15&output=embed`;
   return (
-    <div className="position-relative text-white" style={{ maxWidth: '100%' }}>
-      {/* Background Image with shorter height */}
-      <img
-        src={bgImage}
-        alt="Shell Station"
-        className="img-fluid w-100"
-        style={{ height: '300px', objectFit: 'cover' }}
-      />
+    <div className="station-banner">
+      <img src={bgImage} alt="Shell Station" className="station-banner__img" />
 
-      {/* Floating Info Box */}
-      <div
-        className="position-absolute top-0 start-0 mt-4 ms-4 p-4 rounded shadow"
-        style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.75)',
-          maxWidth: '380px',
-          borderBottom: '4px solid red',
-        }}
-      >
-        <h3 className="fw-bold">EZZAHRA II</h3>
+      <div className="station-banner__info">
+        <h3>Ezzahra II</h3>
 
-        <p className="mb-2">
-          <i className="fas fa-map-marker-alt me-2"></i>A 22 Route Nationale MC
-          39, 2034, Ezzahra, TN
-        </p>
+        <div className="station-banner__map-container">
+          <iframe
+            src={embedUrl}
+            allowFullScreen
+            loading="lazy"
+            title="Carte Ezzahra II"
+          />
+        </div>
 
-        <p className="mb-2">
-          <i className="fas fa-phone me-2"></i>
+        <p className="station-banner__phone">
+          <i className="fas fa-phone-alt me-2"></i>
           +216 29 958 889
         </p>
 
-        <p className="fw-bold mb-3">Open 24 Hours</p>
-
-        <button className="btn btn-danger w-100 fw-bold">Get Directions</button>
+        <p className="station-banner__hours">
+          <i className="far fa-clock me-2"></i>
+          Ouvert 24 h/24
+        </p>
       </div>
     </div>
-  )
+  );
 }
-
-export default StationBanner
