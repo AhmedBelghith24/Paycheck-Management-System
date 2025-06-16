@@ -6,6 +6,7 @@ import Alert from "../components/Alert";
 import StationBanner from "../components/StationBanner";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./Home.css"; // ✅ Import enhanced styles
 import Navbar from "../components/NavBar";
 
 function Home() {
@@ -19,7 +20,6 @@ function Home() {
   const [bankList, setBankList] = useState([]);
   const [selectedSupplier, setSelectedSupplier] = useState("");
   const [selectedBank, setSelectedBank] = useState("");
-  // const [filterMonth, setFilterMonth] = useState(null)
   const [filterRange, setFilterRange] = useState([null, null]);
   const [startDate, endDate] = filterRange;
 
@@ -49,7 +49,7 @@ function Home() {
       const res = await axios.get("/api/bills?paid=false");
       setBills(res.data);
     } catch (error) {
-      console.error("Error fetching bills:", error);
+      console.error("Erreur lors du chargement des factures :", error);
     }
   };
 
@@ -58,7 +58,7 @@ function Home() {
       const res = await axios.get("/api/suppliers");
       setSupplierList(res.data);
     } catch (error) {
-      console.error("Error fetching suppliers:", error);
+      console.error("Erreur lors du chargement des fournisseurs :", error);
     }
   };
 
@@ -67,14 +67,14 @@ function Home() {
       const res = await axios.get("/api/banks");
       setBankList(res.data);
     } catch (error) {
-      console.error("Error fetching banks:", error);
+      console.error("Erreur lors du chargement des banques :", error);
     }
   };
 
   const onMarkAsPaid = async (id) => {
     await axios.patch(`/api/bills/mark-paid/${id}`);
     fetchBills();
-    setMessage("Moved to Payed Paycheck");
+    setMessage("Marqué comme payé");
     setShow(true);
     setTimeout(() => setShow(false), 3000);
   };
@@ -82,7 +82,6 @@ function Home() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    // Define required fields
     const requiredFields = [
       "Supplier",
       "Bank",
@@ -94,28 +93,25 @@ function Home() {
       "PaymentDate",
     ];
 
-    // Check for any missing field
     const newErrors = {};
     requiredFields.forEach((field) => {
       if (!form[field]) {
-        newErrors[field] = "This field is required";
+        newErrors[field] = "Ce champ est requis";
       }
     });
 
-    // If there are any errors, set and show them
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      setMessage("⚠️ Please fill all required fields.");
+      setMessage("⚠️ Veuillez remplir tous les champs requis.");
       setShow(true);
       setTimeout(() => setShow(false), 4000);
       return;
     }
 
-    // If no errors, submit form
     axios
       .post("/api/bills", form)
       .then((res) => {
-        setMessage(res.data.message);
+        setMessage("Facture ajoutée avec succès");
         setForm({});
         setErrors({});
         setShow(true);
@@ -126,9 +122,9 @@ function Home() {
   };
 
   const OnDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this record?")) {
+    if (window.confirm("Voulez-vous vraiment supprimer cet enregistrement ?")) {
       axios.delete(`/api/bills/${id}`).then((res) => {
-        setMessage(res.data.message);
+        setMessage("Enregistrement supprimé");
         setShow(true);
         fetchBills();
         setTimeout(() => setShow(false), 4000);
@@ -179,19 +175,6 @@ function Home() {
     paginatedBills.length > 0 &&
     paginatedBills.every((bill) => selectedIds.includes(bill._id));
 
-  // const handleSelectAll = () => {
-  //   if (allSelected) {
-  //     setSelectedIds(
-  //       selectedIds.filter(
-  //         (id) => !paginatedBills.some((bill) => bill._id === id)
-  //       )
-  //     )
-  //   } else {
-  //     const newIds = paginatedBills.map((bill) => bill._id)
-  //     setSelectedIds([...new Set([...selectedIds, ...newIds])])
-  //   }
-  // }
-
   const handleSelectAll = () => {
     const visibleIds = paginatedBills.map((bill) => bill._id);
     const allVisibleSelected = visibleIds.every((id) =>
@@ -199,12 +182,10 @@ function Home() {
     );
 
     if (allVisibleSelected) {
-      // Deselect all visible ones
       setSelectedIds((prevSelected) =>
         prevSelected.filter((id) => !visibleIds.includes(id))
       );
     } else {
-      // Select all visible ones
       setSelectedIds((prevSelected) => [
         ...new Set([...prevSelected, ...visibleIds]),
       ]);
@@ -212,262 +193,294 @@ function Home() {
   };
 
   const handleSelect = (id) => {
-    setSelectedIds(
-      (prevSelected) =>
-        prevSelected.includes(id)
-          ? prevSelected.filter((selectedId) => selectedId !== id) // unselect
-          : [...prevSelected, id] // select
+    setSelectedIds((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((selectedId) => selectedId !== id)
+        : [...prevSelected, id]
     );
   };
 
   return (
     <>
       <Navbar />
-      <div className="row p-4 mt-5">
+      <div className="container-fluid p-4 mt-5">
         <StationBanner />
-        <div className="mt-4">
+
+        {/* Section d'alertes */}
+        <div className="mt-4 fade-in-up">
           <Alert message={message} show={show} />
         </div>
 
-        <div className="mt-4">
-          <h2>Add New Paycheck</h2>{" "}
-        </div>
-        <div className="col-12 col-lg-4">
-          <form onSubmit={onSubmitHandler}>
-            <div className="mb-3">
-              <label className="form-label">Supplier</label>
-              <select
-                className="form-select"
-                name="Supplier"
-                value={form.Supplier || ""}
-                onChange={onChangeHandler}
-              >
-                <option value="">Select a supplier</option>
-                {supplierList.map((s) => (
-                  <option key={s._id} value={s.SupplierName}>
-                    {s.SupplierName}
-                  </option>
-                ))}
-              </select>
-              {errors.Supplier && (
-                <div className="invalid-feedback d-block">
-                  {errors.Supplier}
-                </div>
-              )}
-            </div>
+        {/* Conteneur principal */}
+        <div className="paycheck-container fade-in-up">
+          <div className="grid-container">
+            {/* Section d'ajout */}
+            <div>
+              <h2 className="section-header">Ajouter un nouveau paiement</h2>
+              <div className="form-container">
+                <form onSubmit={onSubmitHandler}>
+                  <div className="form-group">
+                    <label className="form-label">Fournisseur</label>
+                    <select
+                      className="form-select"
+                      name="Supplier"
+                      value={form.Supplier || ""}
+                      onChange={onChangeHandler}
+                    >
+                      <option value="">Choisissez un fournisseur</option>
+                      {supplierList.map((s) => (
+                        <option key={s._id} value={s.SupplierName}>
+                          {s.SupplierName}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.Supplier && (
+                      <div className="invalid-feedback d-block">
+                        {errors.Supplier}
+                      </div>
+                    )}
+                  </div>
 
-            <div className="mb-3">
-              <label className="form-label">Bank</label>
-              <select
-                className="form-select"
-                name="Bank"
-                value={form.Bank || ""}
-                onChange={onChangeHandler}
-              >
-                <option value="">Select a bank</option>
-                {bankList.map((b) => (
-                  <option key={b._id} value={b.BankName}>
-                    {b.BankName}
-                  </option>
-                ))}
-              </select>
-              {errors.Bank && (
-                <div className="invalid-feedback d-block">{errors.Bank}</div>
-              )}
-            </div>
+                  <div className="form-group">
+                    <label className="form-label">Banque</label>
+                    <select
+                      className="form-select"
+                      name="Bank"
+                      value={form.Bank || ""}
+                      onChange={onChangeHandler}
+                    >
+                      <option value="">Choisissez une banque</option>
+                      {bankList.map((b) => (
+                        <option key={b._id} value={b.BankName}>
+                          {b.BankName}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.Bank && (
+                      <div className="invalid-feedback d-block">
+                        {errors.Bank}
+                      </div>
+                    )}
+                  </div>
 
-            <InputGroup
-              label="Bill Number"
-              type="text"
-              name="BillNumber"
-              onChangeHandler={onChangeHandler}
-              errors={errors.BillNumber}
-              value={form.BillNumber || ""}
-            />
+                  <div className="form-group">
+                    <InputGroup
+                      label="N° facture"
+                      type="text"
+                      name="BillNumber"
+                      onChangeHandler={onChangeHandler}
+                      errors={errors.BillNumber}
+                      value={form.BillNumber || ""}
+                    />
+                  </div>
 
-            <div className="mb-3">
-              <label className="form-label mb-2">Receiving Date</label>
-              <DatePicker
-                selected={
-                  form.ReceivingDate ? new Date(form.ReceivingDate) : null
-                }
-                onChange={(date) => handleDateChange("ReceivingDate", date)}
-                className="form-control"
-                dateFormat="yyyy-MM-dd"
-                showTimeSelect={false}
-                placeholderText="Select a date"
-              />
-              {errors.ReceivingDate && (
-                <div className="invalid-feedback d-block">
-                  {errors.ReceivingDate}
-                </div>
-              )}
-            </div>
+                  <div className="form-group">
+                    <label className="form-label">Date de réception</label>
+                    <DatePicker
+                      selected={
+                        form.ReceivingDate ? new Date(form.ReceivingDate) : null
+                      }
+                      onChange={(date) =>
+                        handleDateChange("ReceivingDate", date)
+                      }
+                      className="form-control"
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="Sélectionnez une date"
+                    />
+                    {errors.ReceivingDate && (
+                      <div className="invalid-feedback d-block">
+                        {errors.ReceivingDate}
+                      </div>
+                    )}
+                  </div>
 
-            <InputGroup
-              label="Bill Amount"
-              type="text"
-              name="BillAmount"
-              onChangeHandler={onChangeHandler}
-              errors={errors.BillAmount}
-              value={form.BillAmount || ""}
-            />
-            <InputGroup
-              label="Paycheck Number"
-              type="text"
-              name="PaycheckNumber"
-              onChangeHandler={onChangeHandler}
-              errors={errors.PaycheckNumber}
-              value={form.PaycheckNumber || ""}
-            />
-            <InputGroup
-              label="Amount"
-              type="text"
-              name="Amount"
-              onChangeHandler={onChangeHandler}
-              errors={errors.Amount}
-              value={form.Amount || ""}
-            />
+                  <div className="form-group">
+                    <InputGroup
+                      label="Montant facture"
+                      type="text"
+                      name="BillAmount"
+                      onChangeHandler={onChangeHandler}
+                      errors={errors.BillAmount}
+                      value={form.BillAmount || ""}
+                    />
+                  </div>
 
-            <div className="mb-3">
-              <label className="form-label mb-2">Payment Date</label>
-              <DatePicker
-                selected={form.PaymentDate ? new Date(form.PaymentDate) : null}
-                onChange={(date) => handleDateChange("PaymentDate", date)}
-                className="form-control"
-                dateFormat="yyyy-MM-dd"
-                showTimeSelect={false}
-                placeholderText="Select a date"
-              />
-              {errors.PaymentDate && (
-                <div className="invalid-feedback d-block">
-                  {errors.PaymentDate}
-                </div>
-              )}
-            </div>
+                  <div className="form-group">
+                    <InputGroup
+                      label="N° règlement"
+                      type="text"
+                      name="PaycheckNumber"
+                      onChangeHandler={onChangeHandler}
+                      errors={errors.PaycheckNumber}
+                      value={form.PaycheckNumber || ""}
+                    />
+                  </div>
 
-            <button className="btn btn-danger" type="submit">
-              Add Bill
-            </button>
-          </form>
-        </div>
-        <div className="col-12 col-lg-8">
-          <div className="d-flex mb-3 gap-3 align-items-center">
-            <select
-              className="form-select"
-              value={selectedSupplier}
-              onChange={(e) => setSelectedSupplier(e.target.value)}
-            >
-              <option value="">All Suppliers</option>
-              {supplierList.map((s) => (
-                <option key={s._id} value={s.SupplierName}>
-                  {s.SupplierName}
-                </option>
-              ))}
-            </select>
+                  <div className="form-group">
+                    <InputGroup
+                      label="Montant"
+                      type="text"
+                      name="Amount"
+                      onChangeHandler={onChangeHandler}
+                      errors={errors.Amount}
+                      value={form.Amount || ""}
+                    />
+                  </div>
 
-            <select
-              className="form-select"
-              value={selectedBank}
-              onChange={(e) => setSelectedBank(e.target.value)}
-            >
-              <option value="">All Banks</option>
-              {bankList.map((b) => (
-                <option key={b._id} value={b.BankName}>
-                  {b.BankName}
-                </option>
-              ))}
-            </select>
+                  <div className="form-group">
+                    <label className="form-label">Date de paiement</label>
+                    <DatePicker
+                      selected={
+                        form.PaymentDate ? new Date(form.PaymentDate) : null
+                      }
+                      onChange={(date) => handleDateChange("PaymentDate", date)}
+                      className="form-control"
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="Sélectionnez une date"
+                    />
+                    {errors.PaymentDate && (
+                      <div className="invalid-feedback d-block">
+                        {errors.PaymentDate}
+                      </div>
+                    )}
+                  </div>
 
-            <select
-              className="form-select form-select-sm w-auto"
-              value={filterBy}
-              onChange={(e) => setFilterBy(e.target.value)}
-            >
-              <option value="ReceivingDate">Receiving Month</option>
-              <option value="PaymentDate">Payment Month</option>
-            </select>
-
-            <DatePicker
-              selectsRange
-              startDate={startDate}
-              endDate={endDate}
-              onChange={(update) => setFilterRange(update)}
-              isClearable
-              placeholderText="Filter by Date Range"
-              className="form-control w-auto"
-            />
-          </div>
-
-          <h4 className="fw-bold mb-3">Paycheck List</h4>
-
-          <table className="table table-bordered table-hover text-center">
-            <thead className="table-warning">
-              <tr>
-                <th>
-                  <input
-                    type="checkbox"
-                    checked={allSelected}
-                    onChange={handleSelectAll}
-                  />
-                </th>
-                <th>Supplier</th>
-                <th>Bank</th>
-                <th>Bill #</th>
-                <th>Receiving Date</th>
-                <th>Bill Amount</th>
-                <th>Paycheck #</th>
-                <th>Amount</th>
-                <th>Payment Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedBills.map((bill) => (
-                <RowDetails
-                  key={bill._id}
-                  Id={bill._id}
-                  Supplier={bill.Supplier}
-                  Bank={bill.Bank}
-                  BillNumber={bill.BillNumber}
-                  ReceivingDate={bill.ReceivingDate}
-                  BillAmount={bill.BillAmount}
-                  PaycheckNumber={bill.PaycheckNumber}
-                  Amount={bill.Amount}
-                  PaymentDate={bill.PaymentDate}
-                  paid={bill.paid}
-                  OnDelete={OnDelete}
-                  onMarkAsPaid={onMarkAsPaid}
-                  isSelected={selectedIds.includes(bill._id)}
-                  onSelect={() => handleSelect(bill._id)}
-
-                  // onSelect={() => handleSelect(bill._id)}
-                />
-              ))}
-            </tbody>
-          </table>
-
-          <div className="text-end fw-bold">
-            Total Selected Amount: ${totalSelectedAmount.toFixed(2)}
-          </div>
-
-          <nav className="mt-3">
-            <ul className="pagination justify-content-center">
-              {Array.from({ length: totalPages }, (_, i) => (
-                <li
-                  key={i + 1}
-                  className={`page-item ${currentPage === i + 1 ? "active" : ""}`}
-                >
-                  <button
-                    onClick={() => handlePageChange(i + 1)}
-                    className="page-link"
-                  >
-                    {i + 1}
+                  <button className="btn btn-danger w-100" type="submit">
+                    Ajouter la facture
                   </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+                </form>
+              </div>
+            </div>
+
+            {/* Section de liste */}
+            <div>
+              <h2 className="section-header">Liste des paiements</h2>
+
+              {/* Contrôles de filtre */}
+              <div className="filter-container">
+                <div className="filter-row">
+                  <select
+                    className="form-select"
+                    value={selectedSupplier}
+                    onChange={(e) => setSelectedSupplier(e.target.value)}
+                  >
+                    <option value="">Tous les fournisseurs</option>
+                    {supplierList.map((s) => (
+                      <option key={s._id} value={s.SupplierName}>
+                        {s.SupplierName}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    className="form-select"
+                    value={selectedBank}
+                    onChange={(e) => setSelectedBank(e.target.value)}
+                  >
+                    <option value="">Toutes les banques</option>
+                    {bankList.map((b) => (
+                      <option key={b._id} value={b.BankName}>
+                        {b.BankName}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    className="form-select"
+                    value={filterBy}
+                    onChange={(e) => setFilterBy(e.target.value)}
+                  >
+                    <option value="ReceivingDate">Mois de réception</option>
+                    <option value="PaymentDate">Mois de paiement</option>
+                  </select>
+
+                  <DatePicker
+                    selectsRange
+                    startDate={startDate}
+                    endDate={endDate}
+                    onChange={(update) => setFilterRange(update)}
+                    isClearable
+                    placeholderText="Filtrer par plage de dates"
+                    className="form-control"
+                  />
+                </div>
+              </div>
+
+              {/* Tableau */}
+              <div className="table-container">
+                <table className="table table-hover text-center">
+                  <thead>
+                    <tr>
+                      <th>
+                        <input
+                          type="checkbox"
+                          checked={allSelected}
+                          onChange={handleSelectAll}
+                        />
+                      </th>
+                      <th>Fournisseur</th>
+                      <th>Banque</th>
+                      <th>N° facture</th>
+                      <th>Date de réception</th>
+                      <th>Montant facture</th>
+                      <th>N° règlement</th>
+                      <th>Montant</th>
+                      <th>Date de paiement</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginatedBills.map((bill) => (
+                      <RowDetails
+                        key={bill._id}
+                        Id={bill._id}
+                        Supplier={bill.Supplier}
+                        Bank={bill.Bank}
+                        BillNumber={bill.BillNumber}
+                        ReceivingDate={bill.ReceivingDate}
+                        BillAmount={bill.BillAmount}
+                        PaycheckNumber={bill.PaycheckNumber}
+                        Amount={bill.Amount}
+                        PaymentDate={bill.PaymentDate}
+                        paid={bill.paid}
+                        OnDelete={OnDelete}
+                        onMarkAsPaid={onMarkAsPaid}
+                        isSelected={selectedIds.includes(bill._id)}
+                        onSelect={() => handleSelect(bill._id)}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Montant total */}
+              <div className="total-amount">
+                Montant total sélectionné&nbsp;: $
+                {totalSelectedAmount.toFixed(2)}
+              </div>
+
+              {/* Pagination */}
+              <nav className="mt-4">
+                <ul className="pagination justify-content-center">
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <li
+                      key={i + 1}
+                      className={`page-item ${
+                        currentPage === i + 1 ? "active" : ""
+                      }`}
+                    >
+                      <button
+                        onClick={() => handlePageChange(i + 1)}
+                        className="page-link"
+                      >
+                        {i + 1}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
       </div>
     </>
